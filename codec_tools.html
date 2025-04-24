@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberToolkit - Herramientas Web</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            display: flex;
+        }
+        
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            height: 100vh;
+            position: fixed;
+            overflow-y: auto;
+        }
+        
+        .logo {
+            padding: 20px;
+            text-align: center;
+            border-bottom: 1px solid #34495e;
+        }
+        
+        .sidebar-menu {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .sidebar-menu-item {
+            padding: 15px 20px;
+            border-bottom: 1px solid #34495e;
+            cursor: pointer;
+        }
+        
+        .sidebar-menu-item:hover {
+            background-color: #34495e;
+        }
+        
+        .sidebar-menu-item.active {
+            background-color: #3498db;
+        }
+        
+        .submenu {
+            list-style: none;
+            padding-left: 20px;
+            display: none;
+        }
+        
+        .submenu-item {
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+        
+        .submenu-item:hover {
+            background-color: #34495e;
+        }
+        
+        .submenu-item.active {
+            color: #3498db;
+            font-weight: bold;
+        }
+        
+        /* Main Content */
+        .main-content {
+            margin-left: 250px;
+            width: calc(100% - 250px);
+            padding: 20px;
+        }
+        
+        .container {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        h1 {
+            color: #333;
+            margin-top: 0;
+        }
+        
+        /* Tabs */
+        .tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            background-color: #f1f1f1;
+            border: 1px solid #ddd;
+            border-bottom: none;
+            border-radius: 5px 5px 0 0;
+            margin-right: 5px;
+        }
+        
+        .tab.active {
+            background-color: #fff;
+            border-bottom: 1px solid #fff;
+            margin-bottom: -1px;
+        }
+        
+        .tab-content {
+            display: none;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-top: none;
+            border-radius: 0 0 5px 5px;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        textarea {
+            width: 100%;
+            height: 150px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            resize: vertical;
+        }
+        
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        
+        button:hover {
+            background-color: #45a049;
+        }
+        
+        .result {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        .copy-btn {
+            background-color: #2196F3;
+            margin-left: 10px;
+        }
+        
+        .copy-btn:hover {
+            background-color: #0b7dda;
+        }
+        
+        .section {
+            display: none;
+        }
+        
+        .section.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="logo">
+            <h2>CyberToolkit</h2>
+        </div>
+        <ul class="sidebar-menu">
+            <li class="sidebar-menu-item active" id="encoding-menu" onclick="toggleSubmenuFixed('encoding-submenu', 'encoding-menu')">
+                Herramientas de Codificación
+                <ul id="encoding-submenu" class="submenu" style="display: block;">
+                    <li class="submenu-item active" id="base64-item" onclick="showSectionFixed('encoding-section', 'base64-item')">Base64</li>
+                    <li class="submenu-item" id="url-item" onclick="showSectionFixed('url-section', 'url-item')">URL Encoding</li>
+                    <li class="submenu-item" id="hash-item" onclick="showSectionFixed('hash-section', 'hash-item')">Funciones Hash</li>
+                </ul>
+            </li>
+            <li class="sidebar-menu-item" id="converter-menu" onclick="toggleSubmenuFixed('converter-submenu', 'converter-menu')">
+                Convertidores
+                <ul id="converter-submenu" class="submenu">
+                    <li class="submenu-item" id="unit-item" onclick="showSectionFixed('converter-section', 'unit-item')">Unidades</li>
+                    <li class="submenu-item" id="number-item" onclick="showSectionFixed('number-section', 'number-item')">Sistemas Numéricos</li>
+                </ul>
+            </li>
+            <li class="sidebar-menu-item" id="generators-menu" onclick="toggleSubmenuFixed('generators-submenu', 'generators-menu')">
+                Generadores
+                <ul id="generators-submenu" class="submenu">
+                    <li class="submenu-item" id="password-item" onclick="showSectionFixed('password-section', 'password-item')">Contraseñas</li>
+                    <li class="submenu-item" id="uuid-item" onclick="showSectionFixed('uuid-section', 'uuid-item')">UUID/GUID</li>
+                </ul>
+            </li>
+            <li class="sidebar-menu-item" id="text-menu" onclick="toggleSubmenuFixed('text-submenu', 'text-menu')">
+                Manipulación de Texto
+                <ul id="text-submenu" class="submenu">
+                    <li class="submenu-item" id="format-item" onclick="showSectionFixed('format-section', 'format-item')">Formateadores</li>
+                    <li class="submenu-item" id="case-item" onclick="showSectionFixed('case-section', 'case-item')">Cambio de Mayúsculas</li>
+                </ul>
+            </li>
+            <li class="sidebar-menu-item" id="data-menu" onclick="toggleSubmenuFixed('data-submenu', 'data-menu')">
+                Análisis de Datos
+                <ul id="data-submenu" class="submenu">
+                    <li class="submenu-item" id="json-item" onclick="showSectionFixed('json-section', 'json-item')">JSON Validator</li>
+                    <li class="submenu-item" id="csv-item" onclick="showSectionFixed('csv-section', 'csv-item')">CSV Parser</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Encoding Section -->
+        <div id="encoding-section" class="section active">
+            <div class="container">
+                <h1>Herramientas de Codificación</h1>
+                
+                <div class="tabs">
+                    <div class="tab active" onclick="changeTab('base64-encode')">Codificar Base64</div>
+                    <div class="tab" onclick="changeTab('base64-decode')">Decodificar Base64</div>
+                </div>
+                
+                <div id="base64-encode" class="tab-content active">
+                    <h2>Codificar texto a Base64</h2>
+                    <textarea id="encode-input" placeholder="Ingresa el texto que deseas codificar en Base64"></textarea>
+                    <button onclick="encodeBase64()">Codificar</button>
+                    <div class="result">
+                        <h3>Resultado:</h3>
+                        <p id="encode-result"></p>
+                        <button class="copy-btn" onclick="copyToClipboard('encode-result')">Copiar</button>
+                    </div>
+                </div>
+                
+                <div id="base64-decode" class="tab-content">
+                    <h2>Decodificar Base64 a texto</h2>
+                    <textarea id="decode-input" placeholder="Ingresa el texto en Base64 que deseas decodificar"></textarea>
+                    <button onclick="decodeBase64()">Decodificar</button>
+                    <div class="result">
+                        <h3>Resultado:</h3>
+                        <p id="decode-result"></p>
+                        <button class="copy-btn" onclick="copyToClipboard('decode-result')">Copiar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- URL Section -->
+        <div id="url-section" class="section">
+            <div class="container">
+                <h1>Codificación URL</h1>
+                
+                <div class="tabs">
+                    <div class="tab active" onclick="changeUrlTab('url-encode')">Codificar URL</div>
+                    <div class="tab" onclick="changeUrlTab('url-decode')">Decodificar URL</div>
+                </div>
+                
+                <div id="url-encode" class="tab-content active">
+                    <h2>Codificar texto para URL</h2>
+                    <textarea id="url-encode-input" placeholder="Ingresa el texto que deseas codificar para URL"></textarea>
+                    <button onclick="encodeURL()">Codificar</button>
+                    <div class="result">
+                        <h3>Resultado:</h3>
+                        <p id="url-encode-result"></p>
+                        <button class="copy-btn" onclick="copyToClipboard('url-encode-result')">Copiar</button>
+                    </div>
+                </div>
+                
+                <div id="url-decode" class="tab-content">
+                    <h2>Decodificar texto de URL</h2>
+                    <textarea id="url-decode-input" placeholder="Ingresa el texto codificado para URL que deseas decodificar"></textarea>
+                    <button onclick="decodeURL()">Decodificar</button>
+                    <div class="result">
+                        <h3>Resultado:</h3>
+                        <p id="url-decode-result"></p>
+                        <button class="copy-btn" onclick="copyToClipboard('url-decode-result')">Copiar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Hash Section -->
+        <div id="hash-section" class="section">
+            <div class="container">
+                <h1>Funciones Hash</h1>
+                
+                <div class="tabs">
+                    <div class="tab active" onclick="changeHashTab('md5-hash')">MD5</div>
+                    <div class="tab" onclick="changeHashTab('sha1-hash')">SHA-1</div>
+                    <div class="tab" onclick="changeHashTab('sha256-hash')">SHA-256</div>
+                </div>
+                
+                <div id="md5-hash" class="tab-content active">
+                    <h2>Generar hash MD5</h2>
+                    <textarea id="md5-input" placeholder="Ingresa el texto para generar un hash MD5"></textarea>
+                    <button onclick="generateMD5()">Generar Hash</button>
+                    <div class="result">
+                        <h3>Resultado:</h3>
+                        <p id="md5-result"></p>
+                        <button class="copy-btn" onclick="copyToClipboard('md5-result')">Copiar</button>
+                    </div>
+                </div>
+                
+                <div id="sha1-hash" class="tab-content">
+                    <h2>Generar hash SHA-1</h2>
+                    <textarea id="sha1-input" placeholder="Ingresa el texto para generar un hash SHA-1"></textarea>
+                    <button onclick="generateSHA1()">Generar Hash</button>
+                    <div class="result">
+                        <h3>Resultado:</h3>
+                        <p id="sha1-result"></p>
+                        <button class="copy-btn" onclick="copyToClipboard('sha1-result')">Copiar</button>
+                    </div>
+                </div>
+                
+                <div id="sha256-hash" class="tab-content">
+                    <h2>Generar hash SHA-256</h2>
+                    <textarea id="sha256-input" placeholder="Ingresa el texto para generar un hash SHA-256"></textarea>
+                    <button onclick="generateSHA256()">Generar Hash</button>
+                    <div class="result">
+                        <h3>Resultado:</h3>
+                        <p id="sha256-result"></p>
+                        <button class="copy-btn" onclick="copyToClipboard('sha256-result')">Copiar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Placeholder para otras secciones -->
+        <div id="converter-section" class="section">
+            <div class="container">
+                <h1>Convertidor de Unidades</h1>
+                <p>Esta sección está en desarrollo. Pronto podrás convertir entre diferentes unidades de medida.</p>
+            </div>
+        </div>
+
+        <div id="number-section" class="section">
+            <div class="container">
+                <h1>Conversión de Sistemas Numéricos</h1>
+                <p>Esta sección está en desarrollo. Pronto podrás convertir entre decimal, binario, hexadecimal y más.</p>
+            </div>
+        </div>
+
+        <div id="password-section" class="section">
+            <div class="container">
+                <h1>Generador de Contraseñas</h1>
+                <p>Esta sección está en desarrollo. Pronto podrás generar contraseñas seguras con diferentes criterios.</p>
+            </div>
+        </div>
+
+        <div id="uuid-section" class="section">
+            <div class="container">
+                <h1>Generador de UUID/GUID</h1>
+                <p>Esta sección está en desarrollo. Pronto podrás generar identificadores únicos universales.</p>
+            </div>
+        </div>
+
+        <div id="format-section" class="section">
+            <div class="container">
+                <h1>Formateadores de Texto</h1>
+                <p>Esta sección está en desarrollo. Pronto podrás formatear código, JSON, XML y más.</p>
+            </div>
+        </div>
+
+        <div id="case-section" class="section">
+            <div class="container">
+                <h1>Cambio de Mayúsculas y Minúsculas</h1>
+                <p>Esta sección está en desarrollo. Pronto podrás transformar texto entre diferentes casos.</p>
+            </div>
+        </div>
+
+        <div id="json-section" class="section">
+            <div class="container">
+                <h1>Validador JSON</h1>
+                <p>Esta sección está en desarrollo. Pronto podrás validar y formatear JSON.</p>
+            </div>
+        </div>
+
+        <div id="csv-section" class="section">
+            <div class="container">
+                <h1>Analizador CSV</h1>
+                <p>Esta sección está en desarrollo. Pronto podrás analizar y manipular datos CSV.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Función corregida para manejar los menús desplegables
+        function toggleSubmenuFixed(submenuId, menuItemId) {
+            // Obtener el submenú actual
+            var currentSubmenu = document.getElementById(submenuId);
+            
+            // Si el submenú está visible, no hacer nada (mantenerlo abierto)
+            if (currentSubmenu.style.display === 'block') {
+                return;
+            }
+            
+            // Ocultar todos los submenús
+            var submenus = document.getElementsByClassName('submenu');
+            for (var i = 0; i < submenus.length; i++) {
+                submenus[i].style.display = 'none';
+            }
+            
+            // Eliminar la clase 'active' de todos los elementos del menú
+            var menuItems = document.getElementsByClassName('sidebar-menu-item');
+            for (var i = 0; i < menuItems.length; i++) {
+                menuItems[i].classList.remove('active');
+            }
+            
+            // Activar el elemento de menú seleccionado
+            document.getElementById(menuItemId).classList.add('active');
+            
+            // Mostrar el submenú seleccionado
+            currentSubmenu.style.display = 'block';
+        }
+        
+        // Función corregida para mostrar la sección seleccionada
+        function showSectionFixed(sectionId, itemId) {
+            // Prevenir que el evento llegue al padre (evitar que se contraiga el menú)
+            event.stopPropagation();
+            
+            // Ocultar todas las secciones
+            var sections = document.getElementsByClassName('section');
+            for (var i = 0; i < sections.length; i++) {
+                sections[i].classList.remove('active');
+            }
+            
+            // Mostrar la sección seleccionada
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Eliminar la clase 'active' de todos los elementos del submenú
+            var submenuItems = document.getElementsByClassName('submenu-item');
+            for (var i = 0; i < submenuItems.length; i++) {
+                submenuItems[i].classList.remove('active');
+            }
+            
+            // Activar el elemento de submenú seleccionado
+            document.getElementById(itemId).classList.add('active');
+        }
+        
+        // Funciones para las pestañas de Base64
+        function changeTab(tabId) {
+            // Ocultar todos los contenidos de las pestañas
+            var tabContents = document.querySelectorAll('#encoding-section .tab-content');
+            for (var i = 0; i < tabContents.length; i++) {
+                tabContents[i].classList.remove('active');
+            }
+            
+            // Desactivar todas las pestañas
+            var tabs = document.querySelectorAll('#encoding-section .tab');
+            for (var i = 0; i < tabs.length; i++) {
+                tabs[i].classList.remove('active');
+            }
+            
+            // Activar la pestaña y el contenido seleccionados
+            document.getElementById(tabId).classList.add('active');
+            var selectedTab = document.querySelector(`#encoding-section .tab[onclick="changeTab('${tabId}')"]`);
+            selectedTab.classList.add('active');
+        }
+        
+        // Funciones para las pestañas de URL
+        function changeUrlTab(tabId) {
+            // Ocultar todos los contenidos de las pestañas
+            var tabContents = document.querySelectorAll('#url-section .tab-content');
+            for (var i = 0; i < tabContents.length; i++) {
+                tabContents[i].classList.remove('active');
+            }
+            
+            // Desactivar todas las pestañas
+            var tabs = document.querySelectorAll('#url-section .tab');
+            for (var i = 0; i < tabs.length; i++) {
+                tabs[i].classList.remove('active');
+            }
+            
+            // Activar la pestaña y el contenido seleccionados
+            document.getElementById(tabId).classList.add('active');
+            var selectedTab = document.querySelector(`#url-section .tab[onclick="changeUrlTab('${tabId}')"]`);
+            selectedTab.classList.add('active');
+        }
+        
+        // Funciones para las pestañas de Hash
+        function changeHashTab(tabId) {
+            // Ocultar todos los contenidos de las pestañas
+            var tabContents = document.querySelectorAll('#hash-section .tab-content');
+            for (var i = 0; i < tabContents.length; i++) {
+                tabContents[i].classList.remove('active');
+            }
+            
+            // Desactivar todas las pestañas
+            var tabs = document.querySelectorAll('#hash-section .tab');
+            for (var i = 0; i < tabs.length; i++) {
+                tabs[i].classList.remove('active');
+            }
+            
+            // Activar la pestaña y el contenido seleccionados
+            document.getElementById(tabId).classList.add('active');
+            var selectedTab = document.querySelector(`#hash-section .tab[onclick="changeHashTab('${tabId}')"]`);
+            selectedTab.classList.add('active');
+        }
+        
+        // Funciones de codificación/decodificación
+        function encodeBase64() {
+            var input = document.getElementById('encode-input').value;
+            try {
+                var encoded = btoa(unescape(encodeURIComponent(input)));
+                document.getElementById('encode-result').textContent = encoded;
+            } catch (e) {
+                document.getElementById('encode-result').textContent = 'Error: ' + e.message;
+            }
+        }
+        
+        function decodeBase64() {
+            var input = document.getElementById('decode-input').value;
+            try {
+                var decoded = decodeURIComponent(escape(atob(input)));
+                document.getElementById('decode-result').textContent = decoded;
+            } catch (e) {
+                document.getElementById('decode-result').textContent = 'Error: ' + e.message;
+            }
+        }
+        
+        function encodeURL() {
+            var input = document.getElementById('url-encode-input').value;
+            try {
+                var encoded = encodeURIComponent(input);
+                document.getElementById('url-encode-result').textContent = encoded;
+            } catch (e) {
+                document.getElementById('url-encode-result').textContent = 'Error: ' + e.message;
+            }
+        }
+        
+        function decodeURL() {
+            var input = document.getElementById('url-decode-input').value;
+            try {
+                var decoded = decodeURIComponent(input);
+                document.getElementById('url-decode-result').textContent = decoded;
+            } catch (e) {
+                document.getElementById('url-decode-result').textContent = 'Error: ' + e.message;
+            }
+        }
+        
+        // Implementación básica de algoritmos hash (Note: en producción se usarían bibliotecas más robustas)
+        async function generateMD5() {
+            var input = document.getElementById('md5-input').value;
+            try {
+                // Simulando la generación de hash
+                document.getElementById('md5-result').textContent = "MD5 hash simulado para: " + input;
+            } catch (e) {
+                document.getElementById('md5-result').textContent = 'Error: ' + e.message;
+            }
+        }
+        
+        async function generateSHA1() {
+            var input = document.getElementById('sha1-input').value;
+            try {
+                // Simulando la generación de hash
+                document.getElementById('sha1-result').textContent = "SHA-1 hash simulado para: " + input;
+            } catch (e) {
+                document.getElementById('sha1-result').textContent = 'Error: ' + e.message;
+            }
+        }
+        
+        async function generateSHA256() {
+            var input = document.getElementById('sha256-input').value;
+            try {
+                // Simulando la generación de hash
+                document.getElementById('sha256-result').textContent = "SHA-256 hash simulado para: " + input;
+            } catch (e) {
+                document.getElementById('sha256-result').textContent = 'Error: ' + e.message;
+            }
+        }
+        
+        // Función para copiar al portapapeles
+        function copyToClipboard(elementId) {
+            var text = document.getElementById(elementId).textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                alert('Texto copiado al portapapeles');
+            }).catch(err => {
+                console.error('Error al copiar: ', err);
+            });
+        }
+    </script>
+</body>
+</html>
