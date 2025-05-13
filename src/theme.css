@@ -1,0 +1,66 @@
+/* src/theme.css */
+:root {
+    /* Light Theme (default) */
+    --bg-color: #f4f7f9;
+    --text-color: #212529;
+    --sidebar-bg: #e9edf0;
+    --sidebar-text: #2c3e50;
+    --sidebar-hover-bg: #dce4e9;
+    --sidebar-active-bg: #cbd5dd;
+    /* Un poco más oscuro para el activo */
+    --sidebar-active-text: #1a2b38;
+    --input-bg: #ffffff;
+    --input-border: #ced4da;
+    --input-text: #495057;
+    --input-focus-border: #86b7fe;
+    --button-bg: #007bff;
+    --button-text: #ffffff;
+    --button-hover-bg: #0069d9;
+    --accent-color: #007bff;
+    --error-color: #dc3545;
+    --success-color: #198754;
+    --info-text-color: #555e68;
+    --border-color: #dee2e6;
+    --header-bg: #dde4e9;
+    --code-bg: #e9ecef;
+    --code-text: #c7254e;
+    /* Bootstrap's pinkish color for code */
+    --icon-sun-color: #f39c12;
+    --icon-moon-color: #6c757d;
+    --link-color: #007bff;
+    --link-hover-color: #0056b3;
+}
+
+body.dark-theme {
+    --bg-color: #22272e;
+    /* Darker GitHub-like background */
+    --text-color: #c9d1d9;
+    /* Lighter text */
+    --sidebar-bg: #1c2128;
+    /* Darker sidebar */
+    --sidebar-text: #adb5bd;
+    --sidebar-hover-bg: #30363d;
+    --sidebar-active-bg: #384049;
+    /* Lighter active for contrast */
+    --sidebar-active-text: #e9ecef;
+    --input-bg: #2c313a;
+    --input-border: #444c56;
+    --input-text: #c9d1d9;
+    --input-focus-border: #58a6ff;
+    --button-bg: #3081f7;
+    /* Brighter blue for dark mode */
+    --button-text: #ffffff;
+    --button-hover-bg: #58a6ff;
+    --accent-color: #58a6ff;
+    --error-color: #f85149;
+    --success-color: #3fb950;
+    --info-text-color: #8b949e;
+    --border-color: #444c56;
+    --header-bg: #1c2128;
+    --code-bg: #30363d;
+    --code-text: #ff7b72;
+    /* Lighter pinkish for code */
+    --icon-sun-color: #f39c12;
+    --icon-moon-color: #e9ecef;
+    --link-color: #58a6ff;
+    --link-hover-color: #79c0ff; }

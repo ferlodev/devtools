@@ -1,0 +1,303 @@
+/* src/App.css */
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color 0.3s ease, color 0.3s ease;
+  font-size: 16px;
+}
+
+.container {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* Sidebar Styles */
+.sidebar {
+  width: 260px;
+  background-color: var(--sidebar-bg);
+  padding: 20px 0;
+  border-right: 1px solid var(--border-color);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-header {
+  padding: 0 20px 20px 20px;
+  border-bottom: 1px solid var(--border-color);
+  margin-bottom: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sidebar-header h2 {
+  margin: 0;
+  font-size: 1.6em;
+  color: var(--sidebar-text);
+  font-weight: 600;
+}
+
+.sidebar nav ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar nav li a {
+  display: block;
+  padding: 12px 20px;
+  text-decoration: none;
+  color: var(--sidebar-text);
+  font-size: 1.05em;
+  border-left: 3px solid transparent;
+  transition: background-color 0.2s ease, color 0.2s ease, border-left-color 0.2s ease;
+}
+
+.sidebar nav li a:hover {
+  background-color: var(--sidebar-hover-bg);
+  color: var(--accent-color);
+}
+
+.sidebar nav li a.active {
+  background-color: var(--sidebar-active-bg);
+  color: var(--sidebar-active-text);
+  font-weight: 600;
+  border-left-color: var(--accent-color);
+}
+
+/* Content Area Styles */
+.content {
+  flex-grow: 1;
+  padding: 25px 35px;
+  overflow-y: auto;
+}
+
+.tool-section {
+  padding: 20px;
+  margin-bottom: 30px;
+  background-color: var(--input-bg);
+  /* Slight differentiation for tool sections */
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.tool-section h3 {
+  margin-top: 0;
+  margin-bottom: 25px;
+  font-size: 1.75em;
+  color: var(--text-color);
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 10px;
+}
+
+/* Form Elements */
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: var(--text-color);
+}
+
+textarea,
+input[type="text"],
+select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--input-border);
+  background-color: var(--input-bg);
+  color: var(--input-text);
+  border-radius: 5px;
+  font-size: 0.95em;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+}
+
+textarea:focus,
+input[type="text"]:focus,
+select:focus {
+  outline: none;
+  border-color: var(--input-focus-border);
+  box-shadow: 0 0 0 0.2rem rgba(var(--accent-color), 0.25);
+}
+
+textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+input[readonly] {
+  background-color: var(--code-bg);
+  cursor: not-allowed;
+}
+
+/* Button Styles */
+.button-group {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+button {
+  padding: 10px 18px;
+  background-color: var(--button-bg);
+  color: var(--button-text);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.95em;
+  font-weight: 500;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+button:hover {
+  background-color: var(--button-hover-bg);
+}
+
+button:active {
+  transform: translateY(1px);
+}
+
+/* Theme Toggle Button */
+.theme-toggle-button {
+  background: none;
+  border: 1px solid var(--input-border);
+  border-radius: 50%;
+  padding: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  /* Fixed size */
+  height: 40px;
+  /* Fixed size */
+}
+
+.theme-toggle-button svg {
+  width: 20px;
+  height: 20px;
+  transition: fill 0.3s ease, stroke 0.3s ease;
+}
+
+.theme-toggle-button .icon-sun {
+  stroke: var(--icon-sun-color);
+}
+
+.theme-toggle-button .icon-moon {
+  stroke: var(--icon-moon-color);
+}
+
+
+/* Messages */
+.error-message {
+  color: var(--error-color);
+  font-size: 0.9em;
+  margin-top: 10px;
+  padding: 8px;
+  background-color: rgba(var(--error-color), 0.1);
+  border: 1px solid rgba(var(--error-color), 0.3);
+  border-radius: 4px;
+}
+
+.validation-status {
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  font-weight: 500;
+}
+
+.validation-status.valid {
+  color: var(--success-color);
+  background-color: rgba(var(--success-color), 0.1);
+  border: 1px solid rgba(var(--success-color), 0.3);
+}
+
+.validation-status.invalid {
+  color: var(--error-color);
+  background-color: rgba(var(--error-color), 0.1);
+  border: 1px solid rgba(var(--error-color), 0.3);
+}
+
+.validation-status.neutral {
+  color: var(--info-text-color);
+  background-color: var(--code-bg);
+  border: 1px solid var(--border-color);
+}
+
+.info-text {
+  font-size: 0.9em;
+  color: var(--info-text-color);
+  background-color: var(--code-bg);
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid var(--border-color);
+  margin-bottom: 15px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    height: auto;
+    border-right: none;
+    border-bottom: 1px solid var(--border-color);
+    padding: 10px 0;
+  }
+
+  .sidebar-header {
+    padding: 0 15px 15px 15px;
+  }
+
+  .sidebar nav ul {
+    display: flex;
+    overflow-x: auto;
+    /* Allows horizontal scrolling for many items */
+    padding: 0 10px;
+  }
+
+  .sidebar nav li a {
+    padding: 10px 15px;
+    white-space: nowrap;
+    /* Prevent wrapping of menu items */
+    border-left: none;
+    border-bottom: 3px solid transparent;
+  }
+
+  .sidebar nav li a.active {
+    border-bottom-color: var(--accent-color);
+    border-left-color: transparent;
+  }
+
+  .content {
+    padding: 20px;
+  }
+
+  .tool-section h3 {
+    font-size: 1.5em;
+  }
+
+  .button-group {
+    flex-direction: column;
+  }
+
+  button {
+    width: 100%;
+  }
+}
